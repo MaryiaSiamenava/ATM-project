@@ -34,4 +34,16 @@ public class User {
     public String getUserId() {
         return this.userId;
     }
+
+    public boolean validatePin(String userPin){
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            return MessageDigest.isEqual(md.digest(userPin.getBytes(StandardCharsets.UTF_8)), this.pinHash);
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("Error, NoSuchAlgorithmException");
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return false;
+    }
 }

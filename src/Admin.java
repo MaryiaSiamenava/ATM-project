@@ -28,4 +28,16 @@ public class Admin {
     public String getAdminId() {
         return this.adminId;
     }
+
+    public boolean validatePassword(String adminPassword) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            return MessageDigest.isEqual(md.digest(adminPassword.getBytes(StandardCharsets.UTF_8)), this.passwordHash);
+        } catch (NoSuchAlgorithmException e) {
+            System.out.println("Error, NoSuchAlgorithmException");
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return false;
+    }
 }
