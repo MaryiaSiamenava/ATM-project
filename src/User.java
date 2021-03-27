@@ -8,15 +8,15 @@ public class User {
     private String lastName;
     private String userId;
     private byte[] pinHash;
-    private Account account;
+    private ArrayList<Account> accounts;
     private ArrayList<Transaction> transactions;
 
     public User(String firstName, String lastName, Bank bank, String pin) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.userId = bank.getNewUserId();
-        this.account = new Account();
         this.transactions = new ArrayList<Transaction>();
+        this.accounts = new ArrayList<Account>();
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             this.pinHash = md.digest(pin.getBytes(StandardCharsets.UTF_8));
@@ -25,5 +25,9 @@ public class User {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    public void addAccount(Account addAcct) {
+        this.accounts.add(addAcct);
     }
 }
