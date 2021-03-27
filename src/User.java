@@ -16,6 +16,7 @@ public class User {
         this.lastName = lastName;
         this.userId = bank.getNewUserId();
         this.account = new Account();
+        this.transactions = new ArrayList<Transaction>();
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
             this.pinHash = md.digest(pin.getBytes(StandardCharsets.UTF_8));
