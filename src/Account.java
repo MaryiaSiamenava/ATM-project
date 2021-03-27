@@ -10,5 +10,6 @@ public class Account {
         this.name = name;
         holder.addAccount(this);
         bank.addAccount(this);
+        this.transactions = new ArrayList<Transaction>();
     }
 }

@@ -30,4 +30,8 @@ public class User {
     public void addAccount(Account addAcct) {
         this.accounts.add(addAcct);
     }
+
+    public String getUserId() {
+        return this.userId;
+    }
 }

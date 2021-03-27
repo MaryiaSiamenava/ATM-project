@@ -24,4 +24,8 @@ public class Admin {
 
 
     }
+
+    public String getAdminId() {
+        return this.adminId;
+    }
 }

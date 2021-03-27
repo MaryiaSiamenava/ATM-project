@@ -4,6 +4,7 @@ public class Bank {
     private String name;
     private ArrayList<User> users;
     private ArrayList<Account> accounts;
+    private ArrayList<Admin> admins;
 
     public Bank(String name){
         this.name = name;
@@ -12,14 +13,41 @@ public class Bank {
     }
 
     public String getNewUserId() {
-        int random = (int) (Math.random() * 1000000000);
-        String newUserId = random + "";
+        String newUserId;
+        boolean nonUnique;
+
+        do {
+            int random = (int) (Math.random() * 1000000000);
+            newUserId = random + "";
+
+            nonUnique = false;
+            for(User u : this.users) {
+                if(newUserId.compareTo(u.getUserId()) == 0) {
+                    nonUnique = true;
+                    break;
+                }
+            }
+
+        } while (nonUnique);
 
         return newUserId;
     }
     public String getNewAdminId() {
-        int random = (int) (Math.random() * 1000000);
-        String newAdminId = random + "";
+        String newAdminId;
+        boolean nonUnique;
+
+        do {
+            int random = (int) (Math.random() * 100000);
+            newAdminId = random + "";
+
+            nonUnique = false;
+            for(Admin a : this.admins) {
+                if(newAdminId.compareTo(a.getAdminId()) == 0) {
+                    nonUnique = true;
+                    break;
+                }
+            }
+        } while (nonUnique);
         return newAdminId;
     }
 
