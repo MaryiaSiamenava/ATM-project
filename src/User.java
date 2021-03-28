@@ -25,6 +25,8 @@ public class User {
             e.printStackTrace();
             System.exit(1);
         }
+
+        System.out.println("Новый пользователь " + firstName + " " + lastName + " c ID " + userId + " создан.");
     }
 
     public void addAccount(Account addAcct) {
@@ -45,5 +47,13 @@ public class User {
             System.exit(1);
         }
         return false;
+    }
+
+    public String getFirstName() {
+        return this.firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
     }
 }
