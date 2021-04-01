@@ -1,19 +1,19 @@
 package Users;
 
-import ATM.ATM;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public abstract class Person {
-    private static long uniqueID = 0;
+    private static long uniqueID = 1;
     private byte[] AccessCode;
 
     protected long makeNewID() {
         this.uniqueID++;
         return uniqueID;
     }
+
+    abstract long getID();
 
     protected byte[] makeHash(String AccessCodeString) {
         try {

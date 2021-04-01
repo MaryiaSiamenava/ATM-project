@@ -1,9 +1,5 @@
 package Users;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 public class Admin extends Person {
     private String firstName;
     private String lastName;
@@ -17,4 +13,7 @@ public class Admin extends Person {
         this.passwordHash = makeHash(password);
     }
 
+    public long getID() {
+        return adminID;
+    }
 }

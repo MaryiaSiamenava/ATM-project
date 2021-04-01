@@ -2,10 +2,6 @@ package Users;
 
 import Money.Account;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 public class User extends Person {
     private String firstName;
     private String lastName;
@@ -26,5 +22,9 @@ public class User extends Person {
 
     public double getBalance() {
         return this.account.getBalance();
+    }
+
+    public long getID() {
+        return userID;
     }
 }
