@@ -1,6 +1,4 @@
-package ATM;
-
-import java.util.ArrayList;
+package atm;
 
 public class ATM {
     private static double balance;

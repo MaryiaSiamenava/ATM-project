@@ -1,4 +1,4 @@
-package Money;
+package money;
 
 public class Account {
     private static long numberCounter = 0;

@@ -1,6 +1,6 @@
-package Users;
+package users;
 
-import Money.Account;
+import money.Account;
 
 public class User extends Person {
     private String firstName;

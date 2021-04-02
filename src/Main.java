@@ -1,7 +1,7 @@
-import ATM.ATM;
-import Money.Account;
-import Users.Admin;
-import Users.User;
+import atm.ATM;
+import money.Account;
+import users.Admin;
+import users.User;
 
 import java.util.ArrayList;
 import java.util.Scanner;
