@@ -7,6 +7,8 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import static utils.HashUtils.makeHash;
+
 public abstract class Person {
     private static long uniqueID = 1;
 
@@ -19,7 +21,7 @@ public abstract class Person {
         this.id = makeNewID();
         this.firstName = firstName;
         this.lastName = lastName;
-        accessCodeHash = makeHash(accessCode);
+        this.accessCodeHash = makeHash(accessCode);
     }
 
     protected long makeNewID() {
@@ -38,28 +40,9 @@ public abstract class Person {
         return lastName;
     }
 
-    protected byte[] makeHash(String AccessCodeString) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            this.accessCodeHash = md.digest(AccessCodeString.getBytes(StandardCharsets.UTF_8));
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("Error, NoSuchAlgorithmException");
-            e.printStackTrace();
-            System.exit(1);
-        }
-        return this.accessCodeHash;
-    }
 
     public boolean validateAccessCode(String inputAccessCode) {
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            return MessageDigest.isEqual(md.digest(inputAccessCode.getBytes(StandardCharsets.UTF_8)), this.accessCodeHash);
-        } catch (NoSuchAlgorithmException e) {
-            System.out.println("Error, NoSuchAlgorithmException");
-            e.printStackTrace();
-            System.exit(1);
-        }
-        return false;
+        return MessageDigest.isEqual(makeHash(inputAccessCode), this.accessCodeHash);
     }
 
     public double takeMoneyFromATM(ATM atm, double amount) {
