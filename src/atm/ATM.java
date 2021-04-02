@@ -1,9 +1,20 @@
 package atm;
 
+import exceptions.NotEnoughMoneyException;
+
 public class ATM {
-    private static double balance;
+    private double balance;
 
     public double getBalance() {
         return this.balance;
+    }
+
+    public double takeCashAmount(double moneyAmount) {
+        if (Double.compare(moneyAmount, this.balance) > 0) {
+            throw new NotEnoughMoneyException(balance);
+        }
+
+        this.balance -= moneyAmount;
+        return moneyAmount;
     }
 }

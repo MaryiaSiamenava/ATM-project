@@ -12,4 +12,8 @@ public class Account {
     public double getBalance() {
         return this.balance;
     }
+
+    public void addMoneyToAccount(double amount) {
+        this.balance += amount;
+    }
 }
