@@ -9,31 +9,51 @@ import java.security.NoSuchAlgorithmException;
 
 public abstract class Person {
     private static long uniqueID = 1;
-    private byte[] AccessCode;
 
-    protected long makeNewID() {
-        this.uniqueID++;
-        return uniqueID;
+    private long id;
+    private String firstName;
+    private String lastName;
+    private byte[] accessCodeHash;
+
+    public Person(String firstName, String lastName, String accessCode) {
+        this.id = makeNewID();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        accessCodeHash = makeHash(accessCode);
     }
 
-    abstract long getID();
+    protected long makeNewID() {
+        return uniqueID++;
+    }
+
+    public long getID() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
 
     protected byte[] makeHash(String AccessCodeString) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            this.AccessCode = md.digest(AccessCodeString.getBytes(StandardCharsets.UTF_8));
+            this.accessCodeHash = md.digest(AccessCodeString.getBytes(StandardCharsets.UTF_8));
         } catch (NoSuchAlgorithmException e) {
             System.out.println("Error, NoSuchAlgorithmException");
             e.printStackTrace();
             System.exit(1);
         }
-        return this.AccessCode;
+        return this.accessCodeHash;
     }
 
     public boolean validateAccessCode(String inputAccessCode) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");
-            return MessageDigest.isEqual(md.digest(inputAccessCode.getBytes(StandardCharsets.UTF_8)), this.AccessCode);
+            return MessageDigest.isEqual(md.digest(inputAccessCode.getBytes(StandardCharsets.UTF_8)), this.accessCodeHash);
         } catch (NoSuchAlgorithmException e) {
             System.out.println("Error, NoSuchAlgorithmException");
             e.printStackTrace();
