@@ -17,4 +17,8 @@ public class ATM {
         this.balance -= moneyAmount;
         return moneyAmount;
     }
+
+    public void putCashAmount(double moneyAmount) {
+        this.balance += moneyAmount;
+    }
 }

@@ -16,4 +16,8 @@ public class Account {
     public void addMoneyToAccount(double amount) {
         this.balance += amount;
     }
+
+    public void takeMoneyFromAccount(double amount) {
+        this.balance -= amount;
+    }
 }
