@@ -10,6 +10,7 @@ import java.util.Scanner;
 
 public class Main {
     private static final long SECRET_OPERATION = 7762323;
+    private static Person currentPerson;
 
     public static void main(String[] args) {
         ATM atm = new ATM();
@@ -44,7 +45,7 @@ public class Main {
             long ID = scan.nextLong();
 
             if (personVsIds.containsKey(ID)) {
-                final Person currentPerson = personVsIds.get(ID);
+                currentPerson = personVsIds.get(ID);
 
                 System.out.println("Введите ПИН-код:");
                 for (int i = 3; i > 0; i--) {
@@ -63,34 +64,36 @@ public class Main {
                 System.out.println("Пользователя с таким ID не существует.");
             }
         }
+
         isNotSignedIn = true;
         while (isNotSignedIn) {
+            Account currentUserAccount = currentPerson.getAccount();
             System.out.println("Выберите операцию:\n1 - пополнить счет\n2 - снять деньги со счета\n3 - перевести деньги дрйгому пользователю\n4 - выйти ");
             int userChoice = scan.nextInt();
             if (userChoice == 1) {
                 System.out.println("Введите сумму, на которую желаете пополнить счет: ");
                 double amount = scan.nextDouble();
-                curUserAccount.addMoneyToAccount(amount);
+                currentUserAccount.addMoneyToAccount(amount);
                 atm.putCashAmount(amount);
-                System.out.println("Ваш счет пополнен на " + amount + " рублей. Текущий баланс равен " + curUserAccount.getBalance());
+                System.out.println("Ваш счет пополнен на " + amount + " рублей. Текущий баланс равен " + currentUserAccount.getBalance());
                 System.out.println("Желаете совершить другую операцию?\n1 - да\n2 - нет");
                 int kepOrQuit = scan.nextInt();
                 if (kepOrQuit != 1) break;
             } else if (userChoice == 2) {
                 System.out.println("Введите сумму, которую желаете снять.");
                 double amount = scan.nextDouble();
-                if (Double.compare(curUserAccount.getBalance(), amount) > 0) {
+                if (Double.compare(currentUserAccount.getBalance(), amount) > 0) {
                     curUser.takeMoneyFromATM(atm, amount);
-                    curUserAccount.takeMoneyFromAccount(amount);
-                    System.out.println("Операция произведена успешно. Остаток на счете равен " + curUserAccount.getBalance());
+                    currentUserAccount.takeMoneyFromAccount(amount);
+                    System.out.println("Операция произведена успешно. Остаток на счете равен " + currentUserAccount.getBalance());
                     System.out.println("Желаете совершить другую операцию?\n1 - да\n2 - нет");
                     int kepOrQuit = scan.nextInt();
                     if (kepOrQuit != 1) break;
                 } else {
-                    System.out.println("На счете недостаточно средств. Текущий баланс: " + curUserAccount.getBalance());
+                    System.out.println("На счете недостаточно средств. Текущий баланс: " + currentUserAccount.getBalance());
                 }
             } else if (userChoice == 3) {
-                System.out.println("Введите ID пользователя, которому желаете перечислить деньги: ");
+                System.out.println("Введите ID пользователя, которому желаете первести деньги: ");
                 long otherUserID = scan.nextLong();
                 if (personVsIds.containsKey(otherUserID)) {
                     User otherU = (User) personVsIds.get(otherUserID);
@@ -98,15 +101,15 @@ public class Main {
 
                     System.out.println("Введите сумму, которую желаете перевести: ");
                     double amount = scan.nextDouble();
-                    if (Double.compare(curUserAccount.getBalance(), amount) > 0) {
-                        curUserAccount.takeMoneyFromAccount(amount);
+                    if (Double.compare(currentUserAccount.getBalance(), amount) > 0) {
+                        currentUserAccount.takeMoneyFromAccount(amount);
                         otherUAccount.addMoneyToAccount(amount);
-                        System.out.println("Операция произведена успешно. Остаток на счете равен " + curUserAccount.getBalance());
+                        System.out.println("Операция произведена успешно. Остаток на счете равен " + currentUserAccount.getBalance());
                         System.out.println("Желаете совершить другую операцию?\n1 - да\n2 - нет");
                         int kepOrQuit = scan.nextInt();
                         if (kepOrQuit != 1) break;
                     } else {
-                        System.out.println("На вашем счете недостаточно средств. Текущий баланс: " + curUserAccount.getBalance());
+                        System.out.println("На вашем счете недостаточно средств. Текущий баланс: " + currentUserAccount.getBalance());
                     }
 
                 } else {
@@ -114,7 +117,7 @@ public class Main {
                 }
             } else if (userChoice == 4) {
                 break;
-            } else if ( userChoice == SECRET_OPERATION) {
+            } else if (currentPerson instanceof Admin && userChoice == SECRET_OPERATION) {
                 System.out.println("Здравствуйте администратор.\nВведите 1 если желаете попожить деньги в банкомат\nВведите 2 если желаете извлечь деньги из банкомата: ");
                 int adminChoice = scan.nextInt();
                 if (adminChoice == 1) {

@@ -2,6 +2,7 @@ package users;
 
 import atm.ATM;
 import exceptions.NotEnoughMoneyException;
+import money.Account;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -53,4 +54,6 @@ public abstract class Person {
             throw ex;
         }
     }
+
+    public abstract Account getAccount();
 }
