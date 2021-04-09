@@ -17,4 +17,8 @@ public class User extends Person {
     public double getBalance() {
         return this.account.getBalance();
     }
+
+    public Account getAccount() {
+        return this.account;
+    }
 }
