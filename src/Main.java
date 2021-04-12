@@ -103,17 +103,21 @@ public class Main {
         System.out.println("Введите ID пользователя, которому желаете первести деньги: ");
         long otherUserID = scan.nextLong();
         if (personVsIds.containsKey(otherUserID)) {
-            User otherU = (User) personVsIds.get(otherUserID);
+            Person otherU = personVsIds.get(otherUserID);
 
-            System.out.println("Введите сумму, которую желаете перевести: ");
-            double amount = scan.nextDouble();
-            if (Double.compare(((User) currentPerson).getBalance(), amount) > 0) {
-                ((User) currentPerson).takeMoneyFromAccount(amount);
-                otherU.addMoneyToAccount(amount);
-                System.out.println("Операция произведена успешно. Остаток на счете равен " + ((User) currentPerson).getBalance());
-                return (!KepOrQuit(scan));
+            if (otherU instanceof User) {
+                System.out.println("Введите сумму, которую желаете перевести: ");
+                double amount = scan.nextDouble();
+                if (Double.compare(((User) currentPerson).getBalance(), amount) > 0) {
+                    ((User) currentPerson).takeMoneyFromAccount(amount);
+                    ((User) otherU).addMoneyToAccount(amount);
+                    System.out.println("Операция произведена успешно. Остаток на счете равен " + ((User) currentPerson).getBalance());
+                    return (!KepOrQuit(scan));
+                } else {
+                    System.out.println("На вашем счете недостаточно средств. Текущий баланс: " + ((User) currentPerson).getBalance());
+                }
             } else {
-                System.out.println("На вашем счете недостаточно средств. Текущий баланс: " + ((User) currentPerson).getBalance());
+                System.out.println("Пользователя с таким ID не существует");
             }
         } else {
             System.out.println("Пользователя с таким ID не существует");
@@ -135,7 +139,6 @@ public class Main {
         return false;
     }
 
-    //FIXME return boolean instead of int
     private static boolean KepOrQuit(Scanner scan) {
         System.out.println("Желаете совершить другую операцию?\n1 - да\n2 - нет");
         return scan.nextInt() == 1;
