@@ -2,11 +2,8 @@ package users;
 
 import atm.ATM;
 import exceptions.NotEnoughMoneyException;
-import money.Account;
 
-import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 
 import static utils.HashUtils.makeHash;
 
@@ -54,6 +51,4 @@ public abstract class Person {
             throw ex;
         }
     }
-
-    public abstract Account getAccount();
 }

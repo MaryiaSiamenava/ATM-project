@@ -1,5 +1,4 @@
 import atm.ATM;
-import money.Account;
 import users.Admin;
 import users.Person;
 import users.User;
@@ -17,15 +16,11 @@ public class Main {
         Map<Long, Person> personVsIds = new HashMap<>();
 
         User curUser = new User("Александр", "Александров", "1234");
-        Account curUserAccount = new Account();
-        curUser.setAccount(curUserAccount);
         System.out.println(curUser.getID());
         personVsIds.put(curUser.getID(), curUser);
         System.out.println(curUser.getFirstName() + " " + curUser.getLastName());
 
         User otherUser = new User("Дарья", "Попова", "4321");
-        Account otherUserAccount = new Account();
-        otherUser.setAccount(otherUserAccount);
         System.out.println(otherUser.getID());
         personVsIds.put(otherUser.getID(), otherUser);
         System.out.println(otherUser.getFirstName() + " " + otherUser.getLastName());
@@ -68,15 +63,14 @@ public class Main {
 
         while (isNotSignedIn) {
             Person currentPerson = personVsIds.get(currentPersonID);
-            Account currentUserAccount = currentPerson.getAccount();
             System.out.println("Выберите операцию:\n1 - пополнить счет\n2 - снять деньги со счета\n3 - перевести деньги дрйгому пользователю\n4 - выйти ");
             int userChoice = scan.nextInt();
             if (userChoice == 1) {
-                if (topUpAccount(atm, scan, currentUserAccount)) break;
+                if (topUpAccount(atm, scan, currentPerson)) break;
             } else if (userChoice == 2) {
-                if (withdrawalOfMoney(atm, curUser, scan, currentUserAccount)) break;
+                if (withdrawalOfMoney(atm, curUser, scan, currentPerson)) break;
             } else if (userChoice == 3) {
-                if (moneyTransfer(personVsIds, scan, currentUserAccount)) break;
+                if (moneyTransfer(personVsIds, scan, currentPerson)) break;
             } else if (userChoice == 4) {
                 break;
             } else if (currentPerson instanceof Admin && userChoice == SECRET_OPERATION) {
@@ -105,22 +99,21 @@ public class Main {
         System.out.println("Операция произведена успешно. Текущий запас наличных средств: " + atm.getBalance());
     }
 
-    private static boolean moneyTransfer(Map<Long, Person> personVsIds, Scanner scan, Account currentUserAccount) {
+    private static boolean moneyTransfer(Map<Long, Person> personVsIds, Scanner scan, Person currentPerson) {
         System.out.println("Введите ID пользователя, которому желаете первести деньги: ");
         long otherUserID = scan.nextLong();
         if (personVsIds.containsKey(otherUserID)) {
             User otherU = (User) personVsIds.get(otherUserID);
-            Account otherUAccount = otherU.getAccount();
 
             System.out.println("Введите сумму, которую желаете перевести: ");
             double amount = scan.nextDouble();
-            if (Double.compare(currentUserAccount.getBalance(), amount) > 0) {
-                currentUserAccount.takeMoneyFromAccount(amount);
-                otherUAccount.addMoneyToAccount(amount);
-                System.out.println("Операция произведена успешно. Остаток на счете равен " + currentUserAccount.getBalance());
-                return (KepOrQuit(scan)) != 1;
+            if (Double.compare(((User) currentPerson).getBalance(), amount) > 0) {
+                ((User) currentPerson).takeMoneyFromAccount(amount);
+                otherU.addMoneyToAccount(amount);
+                System.out.println("Операция произведена успешно. Остаток на счете равен " + ((User) currentPerson).getBalance());
+                return (!KepOrQuit(scan));
             } else {
-                System.out.println("На вашем счете недостаточно средств. Текущий баланс: " + currentUserAccount.getBalance());
+                System.out.println("На вашем счете недостаточно средств. Текущий баланс: " + ((User) currentPerson).getBalance());
             }
         } else {
             System.out.println("Пользователя с таким ID не существует");
@@ -128,32 +121,32 @@ public class Main {
         return false;
     }
 
-    private static boolean withdrawalOfMoney(ATM atm, User curUser, Scanner scan, Account currentUserAccount) {
-        System.out.println("Введите сумму, которую желаете снять."); //FIXME . -> :
+    private static boolean withdrawalOfMoney(ATM atm, User curUser, Scanner scan, Person currentPerson) {
+        System.out.println("Введите сумму, которую желаете снять: ");
         double amount = scan.nextDouble();
-        if (Double.compare(currentUserAccount.getBalance(), amount) > 0) {
+        if (Double.compare(((User) currentPerson).getBalance(), amount) > 0) {
             curUser.takeMoneyFromATM(atm, amount);
-            currentUserAccount.takeMoneyFromAccount(amount);
-            System.out.println("Операция произведена успешно. Остаток на счете равен " + currentUserAccount.getBalance());
-            return (KepOrQuit(scan)) != 1;
+            ((User) currentPerson).takeMoneyFromAccount(amount);
+            System.out.println("Операция произведена успешно. Остаток на счете равен " + ((User) currentPerson).getBalance());
+            return (!KepOrQuit(scan));
         } else {
-            System.out.println("На счете недостаточно средств. Текущий баланс: " + currentUserAccount.getBalance());
+            System.out.println("На счете недостаточно средств. Текущий баланс: " + ((User) currentPerson).getBalance());
         }
         return false;
     }
 
     //FIXME return boolean instead of int
-    private static int KepOrQuit(Scanner scan) {
+    private static boolean KepOrQuit(Scanner scan) {
         System.out.println("Желаете совершить другую операцию?\n1 - да\n2 - нет");
-        return scan.nextInt();
+        return scan.nextInt() == 1;
     }
 
-    private static boolean topUpAccount(ATM atm, Scanner scan, Account currentUserAccount) {
+    private static boolean topUpAccount(ATM atm, Scanner scan, Person currentPerson) {
         System.out.println("Введите сумму, на которую желаете пополнить счет: ");
         double amount = scan.nextDouble();
-        currentUserAccount.addMoneyToAccount(amount);
+        ((User) currentPerson).addMoneyToAccount(amount);
         atm.putCashAmount(amount);
-        System.out.println("Ваш счет пополнен на " + amount + " рублей. Текущий баланс равен " + currentUserAccount.getBalance());
-        return (KepOrQuit(scan)) != 1;
+        System.out.println("Ваш счет пополнен на " + amount + " рублей. Текущий баланс равен " + ((User) currentPerson).getBalance());
+        return (!KepOrQuit(scan));
     }
 }
