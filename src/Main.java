@@ -129,7 +129,7 @@ public class Main {
     }
 
     private static boolean withdrawalOfMoney(ATM atm, User curUser, Scanner scan, Account currentUserAccount) {
-        System.out.println("Введите сумму, которую желаете снять.");
+        System.out.println("Введите сумму, которую желаете снять."); //FIXME . -> :
         double amount = scan.nextDouble();
         if (Double.compare(currentUserAccount.getBalance(), amount) > 0) {
             curUser.takeMoneyFromATM(atm, amount);
@@ -142,6 +142,7 @@ public class Main {
         return false;
     }
 
+    //FIXME return boolean instead of int
     private static int KepOrQuit(Scanner scan) {
         System.out.println("Желаете совершить другую операцию?\n1 - да\n2 - нет");
         return scan.nextInt();
