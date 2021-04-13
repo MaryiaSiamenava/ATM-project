@@ -1,4 +1,4 @@
-package users;
+package com.maryiasiamenava.users;
 
 public class User extends Person {
 

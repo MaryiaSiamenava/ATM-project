@@ -1,9 +1,17 @@
-package atm;
+package com.maryiasiamenava.atm;
 
-import exceptions.NotEnoughMoneyException;
+import com.maryiasiamenava.exceptions.NotEnoughMoneyException;
 
 public class ATM {
     private double balance;
+
+    public ATM() {
+    }
+
+    // only for testing purpose
+    ATM(double balance) {
+        this.balance = balance;
+    }
 
     public double getBalance() {
         return this.balance;

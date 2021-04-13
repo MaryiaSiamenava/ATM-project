@@ -1,11 +1,12 @@
-package users;
+package com.maryiasiamenava.users;
 
-import atm.ATM;
-import exceptions.NotEnoughMoneyException;
+import com.maryiasiamenava.atm.ATM;
+import com.maryiasiamenava.exceptions.NotEnoughMoneyException;
 
 import java.security.MessageDigest;
 
-import static utils.HashUtils.makeHash;
+import static com.maryiasiamenava.utils.HashUtils.makeHash;
+
 
 public abstract class Person {
     private static long uniqueID = 1;
