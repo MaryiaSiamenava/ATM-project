@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         ATM atm = new ATM();
-        Map<Long, Person> personVsIds = new HashMap<>();
+        Map<Long, Person> personVsIds = new HashMap<Long, Person>();
 
         User curUser = new User("Александр", "Александров", "1234");
         System.out.println(curUser.getID());
