@@ -1,6 +1,6 @@
-package atm;
+package com.maryia.atm;
 
-import exceptions.NotEnoughMoneyException;
+import com.maryia.exceptions.NotEnoughMoneyException;
 
 public class ATM {
     private double balance;

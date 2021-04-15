@@ -1,4 +1,5 @@
-import atm.ATM;
+package com.maryia.atm;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

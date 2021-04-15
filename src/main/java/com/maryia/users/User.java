@@ -1,4 +1,4 @@
-package users;
+package com.maryia.users;
 
 public class User extends Person {
 

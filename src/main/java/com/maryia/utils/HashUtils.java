@@ -1,4 +1,4 @@
-package utils;
+package com.maryia.utils;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;

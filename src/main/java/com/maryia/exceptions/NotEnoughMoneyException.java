@@ -1,4 +1,4 @@
-package exceptions;
+package com.maryia.exceptions;
 
 public class NotEnoughMoneyException extends RuntimeException {
     private final double atmBalance;

@@ -1,7 +1,9 @@
-import atm.ATM;
-import users.Admin;
-import users.Person;
-import users.User;
+package com.maryia;
+
+import com.maryia.atm.ATM;
+import com.maryia.users.Admin;
+import com.maryia.users.Person;
+import com.maryia.users.User;
 
 import java.util.HashMap;
 import java.util.Map;
