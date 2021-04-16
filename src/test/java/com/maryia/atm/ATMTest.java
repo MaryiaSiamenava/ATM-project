@@ -8,10 +8,19 @@ public class ATMTest {
     ATM atm = new ATM();
 
     @Test
-    void putCashAmountTest() {
-        double balance = atm.getBalance();
+    void testPutCashAmount() {
         double amount = 10.0;
         atm.putCashAmount(amount);
-        Assertions.assertEquals(balance, amount);
+        double balance = atm.getBalance();
+        Assertions.assertEquals(10.0, balance);
+    }
+
+    @Test
+    void testTakeCashAmount() {
+        double amount = 10.0;
+        atm.putCashAmount(amount + 5.0);
+        atm.takeCashAmount(amount);
+        double balance = atm.getBalance();
+        Assertions.assertEquals(5.0, balance);
     }
 }
