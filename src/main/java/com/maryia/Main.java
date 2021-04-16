@@ -18,19 +18,16 @@ public class Main {
         Map<Long, Person> personVsIds = new HashMap<Long, Person>();
 
         User curUser = new User("Александр", "Александров", "1234");
-        System.out.println(curUser.getID());
+        System.out.println("ID первого пользователя" + curUser.getID());
         personVsIds.put(curUser.getID(), curUser);
-        System.out.println(curUser.getFirstName() + " " + curUser.getLastName());
 
         User otherUser = new User("Дарья", "Попова", "4321");
-        System.out.println(otherUser.getID());
+        System.out.println("ID второго пользователя" + otherUser.getID());
         personVsIds.put(otherUser.getID(), otherUser);
-        System.out.println(otherUser.getFirstName() + " " + otherUser.getLastName());
 
         Admin curAdmin = new Admin("Николай", "Николаев", "123456789");
-        System.out.println(curAdmin.getID());
+        System.out.println("ID админа" + curAdmin.getID());
         personVsIds.put(curAdmin.getID(), curAdmin);
-        System.out.println(curAdmin.getFirstName() + " " + curAdmin.getLastName());
 
         Scanner scan = new Scanner(System.in);
 

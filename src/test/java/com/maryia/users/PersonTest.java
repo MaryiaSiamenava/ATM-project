@@ -2,13 +2,13 @@ package com.maryia.users;
 
 import com.maryia.atm.ATM;
 import com.maryia.exceptions.NotEnoughMoneyException;
-import com.maryia.utils.HashUtils;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 public class PersonTest {
 
     @Test
+    @Order(1)
     void testID_AlwaysUnique() {
         Person admin = new Admin("123", "123", "1234");
         Person user = new User("123", "123", "1234");
