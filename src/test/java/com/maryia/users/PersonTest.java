@@ -18,15 +18,7 @@ public class PersonTest {
     }
 
     @Test
-    void testTakeMoneyFromATM_throwsNotEnoughMoneyException() {
-        Person user = new User("123", "123", "1234");
-        ATM atm = new ATM();
-        double amount = 100.0;
-        Assertions.assertThrows(NotEnoughMoneyException.class, () -> user.takeMoneyFromATM(atm, amount));
-    }
-
-    @Test
-    void testTakeMoneyFromATM() {
+    void whenTakeMoneyFromATM_thenATMBalanceDecreases() {
         Person admin = new Admin("123", "123", "1234");
         Person user = new User("123", "123", "1234");
         ATM atm = new ATM();
@@ -38,7 +30,7 @@ public class PersonTest {
     }
 
     @Test
-    void testValidateAccessCode() {
+    void whenAccessCodeIsCorrect_thenReturnTrue() {
         String userPin = "1234";
         String adminPassword = "123456789";
         Person user = new User("123", "123", userPin);

@@ -24,7 +24,7 @@ public class MainTest {
     }
 
     @Test
-    void testLogInScenario_success() {
+    void whenLoggedIn_thenReturnTrue() {
         boolean isNotSignedIn = false;
         long ID = 1;
 
@@ -44,7 +44,7 @@ public class MainTest {
     }
 
     @Test
-    void testLogInScenario_failure() {
+    void whenNotLoggedIn_thenReturnFalse() {
         boolean logInFailure = true;
         long ID = 1;
 
@@ -59,7 +59,7 @@ public class MainTest {
     }
 
     @Test
-    void testMoneyTransfer_success() {
+    void whenEnoughMoneyForTransferring_thenTransferMoneyToOtherUser() {
         User currentPerson = new User("123", "123", "1234");
         currentPerson.addMoneyToAccount(150.0);
         long otherUserID = 2;
@@ -79,8 +79,8 @@ public class MainTest {
     }
 
     @Test
-    void testMoneyTransfer_failure() {
-        boolean moneyTransferFailure = false;
+    void whenNotEnoughMoneyForTransferring_thenReturnFalse() {
+        boolean moneyTransfer = true;
         User currentPerson = new User("123", "123", "1234");
         currentPerson.addMoneyToAccount(100.0);
         long otherUserID = 2;
@@ -90,15 +90,15 @@ public class MainTest {
             if (otherU instanceof User) {
                 double amount = 150.0;
                 if (Double.compare((currentPerson).getBalance(), amount) < 0) {
-                    moneyTransferFailure = true;
+                    moneyTransfer = false;
                 }
-                Assertions.assertTrue(moneyTransferFailure);
+                Assertions.assertFalse(moneyTransfer);
             }
         }
     }
 
     @Test
-    void testWithdrawalOfMoney_success() {
+    void whenEnoughMoneyForWithdrawal_thenATMAndAccountBalanceDecrease() {
         User currentUser = new User("123", "123", "1234");
         currentUser.addMoneyToAccount(100.0);
         ATM atm = new ATM();
@@ -113,20 +113,20 @@ public class MainTest {
     }
 
     @Test
-    void testWithdrawalOfMoney_failure() {
-        boolean withdrawalOfMoneyFailure = false;
+    void whenNotEnoughMoneyForWithdrawal_thenReturnFalse() {
+        boolean withdrawalOfMoney = true;
         User currentUser = new User("123", "123", "1234");
         currentUser.addMoneyToAccount(50.0);
         ATM atm = new ATM();
         double amount = 100.0;
         if (Double.compare(currentUser.getBalance(), amount) < 0) {
-            withdrawalOfMoneyFailure = true;
+            withdrawalOfMoney = false;
         }
-        Assertions.assertTrue(withdrawalOfMoneyFailure);
+        Assertions.assertFalse(withdrawalOfMoney);
     }
 
     @Test
-    void testTopUpAccount() {
+    void whenTopUpAccount_thenATMAndAccountBalanceIncrease() {
         User currentPerson = new User("123", "123", "1234");
         currentPerson.addMoneyToAccount(150.0);
         ATM atm = new ATM();
